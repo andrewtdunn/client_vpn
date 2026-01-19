@@ -7,7 +7,7 @@ export class ClientVpnStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const vpc = new Vpc(this, "TheVPC", {
+    const vpc = new Vpc(this, "DemoVPC", {
       ipAddresses: IpAddresses.cidr("10.0.0.0/16"),
       vpcName: "DemoVPC",
     });
