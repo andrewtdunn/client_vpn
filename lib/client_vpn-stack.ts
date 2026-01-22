@@ -61,5 +61,8 @@ export class ClientVpnStack extends cdk.Stack {
       Port.tcp(22),
       "Allow SSH traffic from my ip only",
     );
+
+    // Add a 'Name' tag to the instance
+    cdk.Tags.of(jumpbox).add("Name", "Jumpbox");
   }
 }
