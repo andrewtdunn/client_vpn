@@ -12,8 +12,8 @@ import {
 import { Construct } from "constructs";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-const MY_IP = "XXX.XXX.XXX.XXX";
-const KEY_NAME = "datajammers_key.pem";
+const MY_IP = "23.125.147.14";
+const KEY_NAME = "datajammers_key";
 
 export class ClientVpnStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -57,12 +57,12 @@ export class ClientVpnStack extends cdk.Stack {
     );
 
     jumpboxSG.addIngressRule(
-      Peer.ipv4(MY_IP),
+      Peer.ipv4(`${MY_IP}/32`),
       Port.tcp(22),
       "Allow SSH traffic from my ip only",
     );
 
     // Add a 'Name' tag to the instance
-    cdk.Tags.of(jumpbox).add("Name", "Jumpbox");
+    cdk.Tags.of(jumpbox).add("Name", "DataJammers Jumpbox");
   }
 }
