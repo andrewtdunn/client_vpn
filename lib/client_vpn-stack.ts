@@ -7,6 +7,7 @@ import {
   SecurityGroup,
   SubnetSelection,
   SubnetType,
+  UserData,
   Vpc,
 } from "aws-cdk-lib/aws-ec2";
 import { Construct } from "constructs";
@@ -64,5 +65,61 @@ export class ClientVpnStack extends cdk.Stack {
 
     // Add a 'Name' tag to the instance
     cdk.Tags.of(jumpbox).add("Name", "DataJammers Jumpbox");
+
+    const vpnSG = new SecurityGroup(this, "ClientVpnSG", {
+      securityGroupName: "ClientVpnSG",
+      vpc,
+      description: "Security Group for Client VPN",
+      allowAllOutbound: true,
+    });
+
+    const appSG = new SecurityGroup(this, "AppSG", {
+      securityGroupName: "AppSG",
+      vpc,
+      description: "Security Group for App Server",
+      allowAllOutbound: true,
+    });
+
+    appSG.addIngressRule(
+      jumpboxSG,
+      Port.tcp(22),
+      "Allow SSH traffic from jumpbox",
+    );
+
+    appSG.addIngressRule(
+      jumpboxSG,
+      Port.tcp(80),
+      "Allow http traffic from jumpbox",
+    );
+
+    appSG.addIngressRule(
+      vpnSG,
+      Port.tcp(80),
+      "Allow http traffic from VPN clients",
+    );
+
+    const userData = UserData.forLinux();
+    userData.addCommands(
+      "sudo su",
+      "yum update -y",
+      "yum install -y httpd.x86_64",
+      "systemctl start httpd.service",
+      "systemctl enable httpd.service",
+      'TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")',
+      'PRIVATE_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/local-ipv4)',
+      'echo "<h1>Application Private IP address is: $PRIVATE_IP</h1>" >> /var/www/html/index.html',
+    );
+
+    const appServer = new Instance(this, "AppServer", {
+      instanceType: new cdk.aws_ec2.InstanceType("t3.micro"),
+      machineImage: cdk.aws_ec2.MachineImage.latestAmazonLinux2(),
+      vpc,
+      vpcSubnets: {
+        subnetType: SubnetType.PRIVATE_WITH_EGRESS,
+      },
+      keyName: KEY_NAME,
+      securityGroup: appSG,
+      userData,
+    });
   }
 }
