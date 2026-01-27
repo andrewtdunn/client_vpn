@@ -121,5 +121,8 @@ export class ClientVpnStack extends cdk.Stack {
       securityGroup: appSG,
       userData,
     });
+
+    // Add a 'Name' tag to the instance
+    cdk.Tags.of(appServer).add("Name", "DataJammers Application");
   }
 }
