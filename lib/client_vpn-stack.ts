@@ -13,8 +13,8 @@ import {
 import { Construct } from "constructs";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-const MY_IP = "23.125.147.14";
-const KEY_NAME = "datajammers_key";
+const MY_IP = "<your IPv4>";
+const KEY_NAME = "<your key name>";
 
 export class ClientVpnStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -99,6 +99,7 @@ export class ClientVpnStack extends cdk.Stack {
     );
 
     const userData = UserData.forLinux();
+
     userData.addCommands(
       "sudo su",
       "yum update -y",
@@ -110,7 +111,7 @@ export class ClientVpnStack extends cdk.Stack {
       'echo "<h1>Application Private IP address is: $PRIVATE_IP</h1>" >> /var/www/html/index.html',
     );
 
-    const appServer = new Instance(this, "AppServer", {
+    const appServer = new Instance(this, "ApplicationServer", {
       instanceType: new cdk.aws_ec2.InstanceType("t3.micro"),
       machineImage: cdk.aws_ec2.MachineImage.latestAmazonLinux2(),
       vpc,
