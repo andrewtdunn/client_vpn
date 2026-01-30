@@ -1,5 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import {
+  ClientVpnUserBasedAuthentication,
   Instance,
   IpAddresses,
   Peer,
@@ -10,12 +11,14 @@ import {
   UserData,
   Vpc,
 } from "aws-cdk-lib/aws-ec2";
+import { MutualAuthenticationMode } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { Construct } from "constructs";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-const MY_IP = "<your IPv4>";
-const KEY_NAME = "<your key name>";
-
+const MY_IP = "<your IP>";
+const KEY_NAME = "<your key pair name>";
+const CLIENT_CERTIFICATE_ARN = "<your client certificate arn>";
+const SERVER_CERIFICIATE_ARN = "<your server certificate arn>";
 export class ClientVpnStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -125,5 +128,18 @@ export class ClientVpnStack extends cdk.Stack {
 
     // Add a 'Name' tag to the instance
     cdk.Tags.of(appServer).add("Name", "DataJammers Application");
+
+    const clientVpnEndpoint = vpc.addClientVpnEndpoint("Endpoint", {
+      cidr: "10.10.0.0/16",
+      serverCertificateArn: SERVER_CERIFICIATE_ARN,
+      clientCertificateArn: CLIENT_CERTIFICATE_ARN,
+      securityGroups: [vpnSG],
+      vpcSubnets: {
+        subnetType: SubnetType.PUBLIC,
+      },
+    });
+
+    // Add a 'Name' tag to the endpoint
+    cdk.Tags.of(clientVpnEndpoint).add("Name", "DataJammers Endpoint");
   }
 }
