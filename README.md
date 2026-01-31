@@ -8,7 +8,10 @@
 
 ## Set Up
 
-`cp .env.template .env`
+```
+cp .env.template .env
+npm i
+```
 
 The newly created `.env` file will contain all environment variables
 
