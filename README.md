@@ -2,6 +2,8 @@
 
 [Article Here](https://datajammers.com/2026/01/31/create-an-aws-client-vpn-and-work-remote/)
 
+![HLD](/readme_images/clientvpn-hld.jpeg)
+
 ## Set Up
 
 `cp .env.template .env`
