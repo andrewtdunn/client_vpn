@@ -13,7 +13,7 @@ cp .env.template .env
 npm i
 ```
 
-The newly created `.env` file will contain all environment variables
+The newly created `.env` file will hold environment variables
 
 ## Useful commands
 
