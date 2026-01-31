@@ -11,7 +11,6 @@ import {
   Vpc,
 } from "aws-cdk-lib/aws-ec2";
 import { Construct } from "constructs";
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 const MY_IP = process.env.MY_IP;
 const KEY_NAME = process.env.KEY_NAME;
@@ -40,7 +39,7 @@ export class ClientVpnStack extends cdk.Stack {
     };
 
     const jumpbox = new Instance(this, "JumpBox", {
-      instanceType: new cdk.aws_ec2.InstanceType("t3.micro"),
+      instanceType: new cdk.aws_ec2.InstanceType(INSTANCE_SIZE_TYPE),
       machineImage: cdk.aws_ec2.MachineImage.latestAmazonLinux2(),
       vpc,
       vpcSubnets: publicSubnets,
