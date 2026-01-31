@@ -1,6 +1,6 @@
 # DataJammers :: Create an AWS Client VPN and Work Remote
 
-[Article Here](https://datajammers.com/wp-admin/post.php?post=260)
+[Article Here](https://datajammers.com/2026/01/31/create-an-aws-client-vpn-and-work-remote/)
 
 ## Set Up
 
