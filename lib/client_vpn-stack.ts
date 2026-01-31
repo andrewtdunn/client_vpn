@@ -13,15 +13,18 @@ import {
 import { Construct } from "constructs";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-const MY_IP = "<your IPv4>";
-const KEY_NAME = "<your key name>";
+const MY_IP = process.env.MY_IP;
+const KEY_NAME = process.env.KEY_NAME;
+const CLOUD_CIDR = "10.0.0.0/16";
+const SSH_PORT = 22;
+const INSTANCE_SIZE_TYPE = "t3.micro";
 
 export class ClientVpnStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const vpc = new Vpc(this, "DemoVPC", {
-      ipAddresses: IpAddresses.cidr("10.0.0.0/16"),
+      ipAddresses: IpAddresses.cidr(CLOUD_CIDR),
       vpcName: "DemoVPC",
     });
 
@@ -59,7 +62,7 @@ export class ClientVpnStack extends cdk.Stack {
 
     jumpboxSG.addIngressRule(
       Peer.ipv4(`${MY_IP}/32`),
-      Port.tcp(22),
+      Port.tcp(SSH_PORT),
       "Allow SSH traffic from my ip only",
     );
 
@@ -82,7 +85,7 @@ export class ClientVpnStack extends cdk.Stack {
 
     appSG.addIngressRule(
       jumpboxSG,
-      Port.tcp(22),
+      Port.tcp(SSH_PORT),
       "Allow SSH traffic from jumpbox",
     );
 
