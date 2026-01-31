@@ -1,6 +1,5 @@
 import * as cdk from "aws-cdk-lib";
 import {
-  ClientVpnUserBasedAuthentication,
   Instance,
   IpAddresses,
   Peer,
@@ -11,14 +10,13 @@ import {
   UserData,
   Vpc,
 } from "aws-cdk-lib/aws-ec2";
-import { MutualAuthenticationMode } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { Construct } from "constructs";
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-const MY_IP = "<your IP>";
-const KEY_NAME = "<your key pair name>";
-const CLIENT_CERTIFICATE_ARN = "<your client certificate arn>";
-const SERVER_CERIFICIATE_ARN = "<your server certificate arn>";
+const MY_IP = process.env.MY_IP;
+const KEY_NAME = process.env.KEY_NAME;
+const CLIENT_CERTIFICATE_ARN = process.env.CLIENT_CERTIFICATE_ARN;
+const SERVER_CERIFICIATE_ARN = process.env.SERVER_CERIFICIATE_ARN;
+
 export class ClientVpnStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -131,8 +129,8 @@ export class ClientVpnStack extends cdk.Stack {
 
     const clientVpnEndpoint = vpc.addClientVpnEndpoint("Endpoint", {
       cidr: "10.10.0.0/16",
-      serverCertificateArn: SERVER_CERIFICIATE_ARN,
-      clientCertificateArn: CLIENT_CERTIFICATE_ARN,
+      serverCertificateArn: SERVER_CERIFICIATE_ARN!,
+      clientCertificateArn: CLIENT_CERTIFICATE_ARN!,
       securityGroups: [vpnSG],
       vpcSubnets: {
         subnetType: SubnetType.PUBLIC,
