@@ -5,7 +5,8 @@
 ## Set Up
 
 `cp .env.template .env`
-The newly created
+
+The newly created `.env` file will contain all environment variables
 
 ## Useful commands
 
