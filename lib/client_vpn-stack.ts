@@ -137,6 +137,7 @@ export class ClientVpnStack extends cdk.Stack {
       vpcSubnets: {
         subnetType: SubnetType.PUBLIC,
       },
+      splitTunnel: true,
     });
 
     // Add a 'Name' tag to the endpoint
