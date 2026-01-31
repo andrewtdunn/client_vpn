@@ -19,6 +19,7 @@ const SERVER_CERIFICIATE_ARN = process.env.SERVER_CERIFICIATE_ARN;
 const CLOUD_CIDR = "10.0.0.0/16";
 const REMOTE_CIDR = "10.10.0.0/16";
 const SSH_PORT = 22;
+const INSTANCE_SIZE_TYPE = "t3.micro";
 
 export class ClientVpnStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -41,7 +42,7 @@ export class ClientVpnStack extends cdk.Stack {
     };
 
     const jumpbox = new Instance(this, "JumpBox", {
-      instanceType: new cdk.aws_ec2.InstanceType("t3.micro"),
+      instanceType: new cdk.aws_ec2.InstanceType(INSTANCE_SIZE_TYPE),
       machineImage: cdk.aws_ec2.MachineImage.latestAmazonLinux2(),
       vpc,
       vpcSubnets: publicSubnets,
@@ -116,7 +117,7 @@ export class ClientVpnStack extends cdk.Stack {
     );
 
     const appServer = new Instance(this, "ApplicationServer", {
-      instanceType: new cdk.aws_ec2.InstanceType("t3.micro"),
+      instanceType: new cdk.aws_ec2.InstanceType(INSTANCE_SIZE_TYPE),
       machineImage: cdk.aws_ec2.MachineImage.latestAmazonLinux2(),
       vpc,
       vpcSubnets: {
