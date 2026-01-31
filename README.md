@@ -1,6 +1,6 @@
 # DataJammers :: Create an AWS Client VPN and Work Remote
 
-## STEP 5: Verify Split Tunneling
+## STEP 5: Set Up VPN Endpoint
 
 [Article Here](https://datajammers.com/2026/01/31/create-an-aws-client-vpn-and-work-remote/)
 
