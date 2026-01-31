@@ -1,14 +1,21 @@
-# Welcome to your CDK TypeScript project
+# DataJammers :: Create an AWS Client VPN and Work Remote
 
-This is a blank project for CDK development with TypeScript.
+## STEP 4: Create Application Server
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+[Article Here](https://datajammers.com/2026/01/31/create-an-aws-client-vpn-and-work-remote/)
+
+![HLD](/readme_images/clientvpn-hld.jpeg)
+
+## Set Up
+
+```
+cp .env.template .env
+npm i
+```
+
+The newly created `.env` file will hold environment variables
 
 ## Useful commands
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+- `cdk deploy` deploy this stack to your default AWS account/region
+- `cdk synth` emits the synthesized CloudFormation template
