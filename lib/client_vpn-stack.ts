@@ -15,7 +15,7 @@ import { Construct } from "constructs";
 const MY_IP = process.env.MY_IP;
 const KEY_NAME = process.env.KEY_NAME;
 const CLOUD_CIDR = "10.0.0.0/16";
-const SSH_PORT = 22;
+const SSH_PORT = 25;
 const INSTANCE_SIZE_TYPE = "t3.micro";
 
 export class ClientVpnStack extends cdk.Stack {
