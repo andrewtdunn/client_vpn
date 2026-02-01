@@ -7,6 +7,5 @@ node_modules
 .cdk.staging
 cdk.out
 
-
 client_vpn_resources/*
 !client_vpn_resources/.gitkeep 
