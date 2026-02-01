@@ -9,4 +9,5 @@ cdk.out
 
 .env
 
-client_vpn_resources/
+client_vpn_resources/*
+!client_vpn_resources/.gitkeep 

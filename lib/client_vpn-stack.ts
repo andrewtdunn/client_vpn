@@ -18,7 +18,7 @@ const CLIENT_CERTIFICATE_ARN = process.env.CLIENT_CERTIFICATE_ARN;
 const SERVER_CERIFICIATE_ARN = process.env.SERVER_CERIFICIATE_ARN;
 const CLOUD_CIDR = "10.0.0.0/16";
 const REMOTE_CIDR = "10.10.0.0/16";
-const SSH_PORT = 22;
+const SSH_PORT = 25;
 const INSTANCE_SIZE_TYPE = "t3.micro";
 
 export class ClientVpnStack extends cdk.Stack {
